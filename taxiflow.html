@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- html 파일과 js를 연결 -->
+    <script defer src="taxiflow.js"></script>
+    <!-- html 파일과 css를 연결 -->
+    <link rel="stylesheet" href="taxiflow.css">
+    <!-- for online using of D3 : Session 3-->
+    <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+    <!-- html과 leaflet 연결 : https://leafletjs.com/examples/quick-start/-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
+    <title>Document</title>
+</head>
+<body>
+    <!-- div : 가상의 레이아웃 (for css) -->
+    <div class="container">
+        <!-- header에는 pjt 이름 -->
+        <header>
+            <p>Taxiflow demo</p>
+        </header>
+        <!-- section에서는 pjt 내용 -->
+        <section>
+            <!-- aside : 별도 구획 -->
+            <aside>
+                <!-- 어떤 날짜의 데이터를 보여줄건지 -->
+                <label for="dateDropdown">Start Data:</label>
+                <select name="" id="startDateDropdown"></select>
+                <br>
+                <label for="dateDropdown">End Data:</label>
+                <select name="" id="endDateDropdown"></select>
+                <br>
+                
+                <div class="separator">----------</div>
+                <!-- <div class="time-input">
+                    <div class="field">
+                        <span>Start</span>
+                        <input type="number" class="input-start" value="00">
+                    </div>
+                    <div class="separator">-</div>
+                    <div class="field">
+                        <span>End</span>
+                        <input type="number" class="input-start" value="24">
+                    </div>
+                </div>
+                <div class="slider">
+                    <div class="progress"></div>
+                </div> -->
+
+
+                <!--  -->
+                <label for="sortDropdown">Start Time:</label>
+                <select name="" id="starttimeDropdown"></select>
+                <br>
+                <label for="sortDropdown">End Time:</label>
+                <select name="" id="endtimeDropdown"></select>
+                <br>
+                
+                <!-- 지진들의 list를 넣을 곳 -->
+                <!-- <ul id="taxiflowList"></ul> -->
+            </aside>
+            <main>
+                <div id="map">
+                    This is map
+                </div>
+            </main>
+        </section>
+    </div>
+    
+    
+</body>
+</html>
