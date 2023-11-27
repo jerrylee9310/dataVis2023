@@ -1,6 +1,6 @@
 // // check the d3 & leaflet is loaded well
-// console.log(d3);
-// console.log(L);
+console.log(d3);
+console.log(L);
 
 // Add Leaflet map
 // const map = L.map('map').setView([20, -160], 4); 
@@ -47,13 +47,13 @@ d3.csv("./data/taxi.csv").then(data => {
   .join("option") 
   .attr("value", d => d) 
   .text(d => d);
-  // add unique dates to dropdown menu
-  d3.select("#endDateDropdown") 
-  .selectAll("option") 
-  .data(startDates) 
-  .join("option") 
-  .attr("value", d => d) 
-  .text(d => d);
+  // // add unique dates to dropdown menu
+  // d3.select("#endDateDropdown") 
+  // .selectAll("option") 
+  // .data(startDates) 
+  // .join("option") 
+  // .attr("value", d => d) 
+  // .text(d => d);
 
   // get unique times for time menu
   const uniqueBeforeHours = [...Array(24).keys()]
@@ -150,21 +150,28 @@ d3.csv("./data/taxi.csv").then(data => {
       }
     }
   }
+
+
+  // slider
+  var slider = document.getElementById("timeslider");
+  var output = document.getElementById("timevalue");
+  output.innerHTML = slider.value +":00-"+(parseInt(slider.value)+1)+":00";
+  
+  slider.oninput = function() {
+      output.innerHTML = this.value +":00-"+(parseInt(this.value)+1)+":00";
+      updateVisualization();
+  }
   
   // Main visulizaition 
   function updateVisualization() {
     // get filtered data
     const startDateDropdown = d3.select("#startDateDropdown");
-    const endDateDropdown = d3.select("#endDateDropdown");
-    const starttimeDropdown = d3.select("#starttimeDropdown");
-    const endtimeDropdown = d3.select("#endtimeDropdown");
+    const startTime = parseInt(slider.value);
 
     const selectedStartDateTime = new Date(startDateDropdown.node().value);
-    selectedStartHour = starttimeDropdown.node().value
-    selectedStartDateTime.setHours(selectedStartHour);
-    const selectedEndDateTime = new Date(endDateDropdown.node().value);
-    selectedEndHour = endtimeDropdown.node().value
-    selectedEndDateTime.setHours(selectedEndHour);
+    selectedStartDateTime.setHours(startTime);
+    const selectedEndDateTime = new Date(startDateDropdown.node().value);
+    selectedEndDateTime.setHours(startTime+1);
     
     const filteredData = data.filter(d => 
       d.before_time > selectedStartDateTime &&
@@ -238,7 +245,6 @@ d3.csv("./data/taxi.csv").then(data => {
       }
     }
 
-  
   // update position of circles
   function updateCircles() {
     g.selectAll('circle')
@@ -249,8 +255,6 @@ d3.csv("./data/taxi.csv").then(data => {
   // 
   updateVisualization();
   d3.select("#startDateDropdown").on("change", updateVisualization);
-  d3.select("#endDateDropdown").on("change", updateVisualization);
-  d3.select("#starttimeDropdown").on("change", updateVisualization);
-  d3.select("#endtimeDropdown").on("change", updateVisualization);
+  d3.select("#")
   map.on('moveend', updateCircles);
 })

@@ -27,17 +27,33 @@
         </header>
         <!-- section에서는 pjt 내용 -->
         <section>
+            <main>
+                <div class="datetimecontainer">
+                    <label for="dateDropdown">Date: </label>
+                    <select name="" id="startDateDropdown"></select>
+                    <br>
+                    <!-- <label for="sortDropdown">Start Time:</label>
+                    <select name="" id="starttimeDropdown"></select> -->
+                    <div class="slidercontainer">
+                        <p id="time">Time: <span id="timevalue"></span></p>
+                        <input type="range" min="0" max="23" value="24" class="slider" id="timeslider">
+                    </div>
+                </div>
+                <div id="map">
+                    This is map
+                </div>
+            </main>
             <!-- aside : 별도 구획 -->
             <aside>
                 <!-- 어떤 날짜의 데이터를 보여줄건지 -->
-                <label for="dateDropdown">Start Data:</label>
+                <!-- <label for="dateDropdown">Start Data:</label>
                 <select name="" id="startDateDropdown"></select>
                 <br>
                 <label for="dateDropdown">End Data:</label>
                 <select name="" id="endDateDropdown"></select>
-                <br>
+                <br> -->
                 
-                <div class="separator">----------</div>
+                <!-- <div class="separator">----------</div> -->
                 <!-- <div class="time-input">
                     <div class="field">
                         <span>Start</span>
@@ -55,23 +71,18 @@
 
 
                 <!--  -->
-                <label for="sortDropdown">Start Time:</label>
+                <!-- <label for="sortDropdown">Start Time:</label>
                 <select name="" id="starttimeDropdown"></select>
                 <br>
                 <label for="sortDropdown">End Time:</label>
                 <select name="" id="endtimeDropdown"></select>
-                <br>
+                <br> -->
                 
-                <!-- 지진들의 list를 넣을 곳 -->
-                <!-- <ul id="taxiflowList"></ul> -->
             </aside>
-            <main>
-                <div id="map">
-                    This is map
-                </div>
-            </main>
         </section>
     </div>
+
+    
     
     
 </body>

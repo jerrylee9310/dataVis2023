@@ -1,5 +1,5 @@
 body {
-    maring: 0;
+    margin: 0;
     font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -18,7 +18,7 @@ section {
 }
 
 aside {
-    width: 250px;
+    width: 20vw;
     padding: 5px;
 }
 
@@ -28,6 +28,47 @@ main {
 }
 
 #map {
-    height: 100vh;
+    /* height: 100vh; */
+    height: 90vh
 }
 
+.datetimecontainer {
+    width: 80vw;
+    height: 5vh;
+    padding:1vh;
+}
+
+.slidercontainer{
+    width: 80vw;
+    margin-top:1vh;
+}
+
+.slider {
+    -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    width: 70vw; /* 슬라이더 길이 */
+    height: 10px; /* 슬라이더 두께 */
+    border-radius: 5px; /* 슬라이더 모서리를 약간 둥글게 */
+    background: #ccc; /* 슬라이더 색상 */
+    outline: none; /* 슬라이더 테두리 없이 */
+    float: right;
+    
+}
+
+/* 슬라이더 핸들(클릭해서 드래그하는 부분) 커스텀 
+(Chrome, Opera, Safari, Edge 브라우저를 위해서는 -webkit-을,
+Firefox 브라우저를 위해서는 -moz- 를 사용하세요 */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    appearance: none; /* 기본 CSS 스타일을 적용하지 않기 위해서 */
+    width: 20px; /* 슬라이더 핸들 길이 */
+    height: 20px; /* 슬라이더 핸들 높이 */
+    border-radius: 50%; /* 핸들 모양을 원모양으로 만들기 위함 */
+    background: rgb(69, 69, 70); /* 슬라이더 핸들 색상 */
+    cursor: pointer; /* 슬라이더 핸들에 마우스를 갖다대면 포인터로 변경 */
+}
+
+#time{
+    width:9vw;
+    margin: 0;
+    float: left;
+}
