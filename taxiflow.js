@@ -161,7 +161,7 @@ d3.csv("./data/taxi.csv").then(data => {
       output.innerHTML = this.value +":00-"+(parseInt(this.value)+1)+":00";
       updateVisualization();
   }
-  
+
   // Main visulizaition 
   function updateVisualization() {
     // get filtered data
@@ -178,6 +178,17 @@ d3.csv("./data/taxi.csv").then(data => {
       d.after_time < selectedEndDateTime
     );
     
+    // all points
+    g.selectAll('.all-circle')
+    .data(filteredData)
+    .join('circle')
+    .attr('class', 'all-circle')
+    .attr('cx', d => map.latLngToLayerPoint({ lat: +d.before_lat, lng: +d.before_long }).x)
+    .attr('cy', d => map.latLngToLayerPoint({ lat: +d.before_lat, lng: +d.before_long }).y)
+    .attr('r', 3)
+    .attr('fill', 'grey') // Set the fill color to grey
+    .attr('opacity', 0.1); // Adjust opacity as needed
+
     // taxi data in given time interval
     console.log(filteredData);
 
