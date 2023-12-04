@@ -5,10 +5,11 @@ console.log(L);
 // Add Leaflet map
 // const map = L.map('map').setView([20, -160], 4); 
 var map = L.map('map', {
-  center: [39.9, 116.4], // beijing
+  // center: [39.9, 116.4], // beijing
+  center: [40,116.565],
   zoom: 10,
   dragging: false,
-  // scrollWheelZoom: "center",
+  scrollWheelZoom: false,
 });
 
 // map type
@@ -122,9 +123,6 @@ d3.csv("./data/taxi.csv").then(data => {
         ];
 
         function updateInOut() {
-          console.log("clicked rectangglw row ", clicked_retangle_row);
-          console.log("i", i);
-          console.log("isSlider", isSliderUpdate);
           if(clicked_retangle_row == i && clicked_retangle_col == j && !isSliderUpdate) {
             outgoingData = [];
             incomingData = [];
@@ -133,7 +131,6 @@ d3.csv("./data/taxi.csv").then(data => {
             outgoingCount[i][j] = 0
             incomingCount[i][j] = 0;
             callback({outgoingData,incomingData,outgoingCount,incomingCount});
-            console.log("clicked rectangel");
 
             clicked_retangle_row = -1; 
             clicked_retangle_col = -1;
@@ -170,18 +167,28 @@ d3.csv("./data/taxi.csv").then(data => {
           // Invoke the callback function with the data
           callback({ outgoingData, incomingData, outgoingCount, incomingCount });
         }
+
         // Add a click event listener to the rectangle
         rectangle.on("click", function(){
+          if(clicked_retangle_col == -1){
+            var row_output = document.getElementById("start_lat_value");
+            var col_output = document.getElementById("start_long_value");
+          }
+          else{
+            var row_output = document.getElementById("end_lat_value");
+            var col_output = document.getElementById("end_long_value");
+          }
+          row_output.innerHTML = i;
+          col_output.innerHTML = j;
+
           isSliderUpdate = false;
           updateInOut();
         });
 
         // update inout flow when slider update
         if(clicked_retangle_row == i && clicked_retangle_col == j && isSliderUpdate) {
-          console.log("update slider inout", clicked_retangle_row);
           updateInOut();
         }
-
       }
     }
   }
