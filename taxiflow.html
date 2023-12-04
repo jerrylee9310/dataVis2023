@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <!-- html 파일과 js를 연결 -->
-    <script defer src="taxiflow.js"></script>
+    <script type="module" src="./taxiflow.js"></script>
+    <script type="module" src="./elements.js"></script>
     <!-- html 파일과 css를 연결 -->
     <link rel="stylesheet" href="taxiflow.css">
     <!-- for online using of D3 : Session 3-->
@@ -45,6 +46,7 @@
             </main>
             <!-- aside : 별도 구획 -->
             <aside>
+                <div>
                 <p>Start region</p>
                 <p id="start point">
                     Row: <span id="start_lat_value"></span><br>
@@ -56,6 +58,13 @@
                     Row: <span id="end_lat_value"></span><br>
                     Col: <span id="end_long_value"></span>
                 </p>
+                <button type="button" id="eta">Estimated time of arrival</button>
+                <button type="button" id="clear">Clear all</button>
+                <br>
+                <p id="eta_field">
+                    Estimated time: <span id="eta_value"></span><br>
+                </p>
+                </div>
                 <!-- 어떤 날짜의 데이터를 보여줄건지 -->
                 <!-- <label for="dateDropdown">Start Data:</label>
                 <select name="" id="startDateDropdown"></select>
