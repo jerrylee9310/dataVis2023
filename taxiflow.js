@@ -275,6 +275,31 @@ d3.csv('./data/taxi.csv').then((data) => {
           clicked_retangle_col = j;
           // Invoke the callback function with the data
           callback({ outgoingData, incomingData, outgoingCount, incomingCount });
+
+          let filteredGridData = data.filter(
+            (d) =>
+              d.before_lat >= latRange[0] &&
+              d.before_lat <= latRange[1] &&
+              d.before_long >= longRange[0] &&
+              d.before_long <= longRange[1]
+          );
+
+          console.log('Filtered Data:', filteredGridData);
+
+          let hourlyIdCounts = Array.from({ length: 24 }, () => new Set());
+          filteredGridData.forEach((d) => {
+            let hour = d.before_time.getHours();
+            hourlyIdCounts[hour].add(d.id);
+          });
+
+          let barChartData = hourlyIdCounts.map((ids, hour) => ({
+            hour,
+            count: ids.size,
+          }));
+          console.log(barChartData);
+
+          // 바 차트 생성
+          createBarChart(barChartData);
         }
 
         // Add a click event listener to the rectangle
