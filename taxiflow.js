@@ -75,8 +75,11 @@ d3.csv("./data/taxi.csv").then(data => {
   .attr("value", d => d) 
   .text(d => d)
 
+  var clicked_retangle_row = -1;
+  var clicked_retangle_col = -1;
+
   // make a grid
-  function drawGrid(filteredData, callback) {
+  function drawGrid(filteredData, isSliderUpdate, callback) {
     const latStart = 39.6;
     const latEnd = 40.4;
     const longStart = 116;
@@ -109,17 +112,33 @@ d3.csv("./data/taxi.csv").then(data => {
           }
         ).addTo(map);
   
-        // Add a click event listener to the rectangle
-        rectangle.on("click", function () {
-          const latRange = [
-            latStart + i * latStep,
-            latStart + (i + 1) * latStep,
-          ];
-          const longRange = [
-            longStart + j * longStep,
-            longStart + (j + 1) * longStep,
-          ];
-  
+        const latRange = [
+          latStart + i * latStep,
+          latStart + (i + 1) * latStep,
+        ];
+        const longRange = [
+          longStart + j * longStep,
+          longStart + (j + 1) * longStep,
+        ];
+
+        function updateInOut() {
+          console.log("clicked rectangglw row ", clicked_retangle_row);
+          console.log("i", i);
+          console.log("isSlider", isSliderUpdate);
+          if(clicked_retangle_row == i && clicked_retangle_col == j && !isSliderUpdate) {
+            outgoingData = [];
+            incomingData = [];
+
+            // Update the counts
+            outgoingCount[i][j] = 0
+            incomingCount[i][j] = 0;
+            callback({outgoingData,incomingData,outgoingCount,incomingCount});
+            console.log("clicked rectangel");
+
+            clicked_retangle_row = -1; 
+            clicked_retangle_col = -1;
+            return
+          }
           // Filter filteredData based on the clicked grid
           outgoingData = filteredData.filter(
             (d) =>
@@ -139,14 +158,30 @@ d3.csv("./data/taxi.csv").then(data => {
           console.log(latRange, longRange)
           // console.log("Outgoing Data in Grid:", outgoingData);
           // console.log("Incoming Data in Grid:", incomingData);
-  
+            
+          
           // Update the counts
           outgoingCount[i][j] = outgoingData.length;
           incomingCount[i][j] = incomingData.length;
-
+          
+          // set clicked rectangle
+          clicked_retangle_row = i;
+          clicked_retangle_col = j;
           // Invoke the callback function with the data
           callback({ outgoingData, incomingData, outgoingCount, incomingCount });
+        }
+        // Add a click event listener to the rectangle
+        rectangle.on("click", function(){
+          isSliderUpdate = false;
+          updateInOut();
         });
+
+        // update inout flow when slider update
+        if(clicked_retangle_row == i && clicked_retangle_col == j && isSliderUpdate) {
+          console.log("update slider inout", clicked_retangle_row);
+          updateInOut();
+        }
+
       }
     }
   }
@@ -158,12 +193,13 @@ d3.csv("./data/taxi.csv").then(data => {
   output.innerHTML = slider.value +":00-"+(parseInt(slider.value)+1)+":00";
   
   slider.oninput = function() {
-      output.innerHTML = this.value +":00-"+(parseInt(this.value)+1)+":00";
-      updateVisualization();
+    output.innerHTML = this.value +":00-"+(parseInt(this.value)+1)+":00";
+    updateVisualization(true);
+    console.log("sliderupdate", this.value);
   }
 
   // Main visulizaition 
-  function updateVisualization() {
+  function updateVisualization(isSliderUpdate) {
     // get filtered data
     const startDateDropdown = d3.select("#startDateDropdown");
     const startTime = parseInt(slider.value);
@@ -190,10 +226,10 @@ d3.csv("./data/taxi.csv").then(data => {
     .attr('opacity', 0.1); // Adjust opacity as needed
 
     // taxi data in given time interval
-    console.log(filteredData);
+    // console.log(filteredData);
 
     // Draw the grid and pass a callback function
-    drawGrid(filteredData, function (gridData) {
+    drawGrid(filteredData, isSliderUpdate, function (gridData) {
       const { outgoingData, incomingData, outgoingCount, incomingCount } = gridData;
       console.log("Received Outgoing Data:", outgoingData);
       console.log("Received Incoming Data:", incomingData);
@@ -264,7 +300,7 @@ d3.csv("./data/taxi.csv").then(data => {
   }
 
   // 
-  updateVisualization();
+  updateVisualization(false);
   d3.select("#startDateDropdown").on("change", updateVisualization);
   d3.select("#")
   map.on('moveend', updateCircles);
